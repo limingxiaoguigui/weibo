@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-06 16:33:55
+ * @LastEditTime: 2021-03-06 17:43:16
  */
 
 use Illuminate\Support\Facades\Route;
@@ -27,4 +27,9 @@ Route::get('/help', 'StaticPagesController@help')->name('help');
 Route::get('/about', 'StaticPagesController@about')->name('about');
 //注册页
 Route::get('signup', 'UsersController@create')->name('signup');
+//用户相关
+Route::resource('users', 'UsersController');
+
+
+
 
