@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description:
+ * @version:
+ * @Author: lmg
+ * @Date: 2021-03-06 11:40:17
+ * @LastEditTime: 2021-03-06 14:53:31
+ */
 
 use Illuminate\Support\Facades\Route;
 
@@ -12,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/','StaticPagesController@home');
+Route::get('/help','StaticPagesController@help');
+Route::get('/about','StaticPagesController@about');
 
-Route::get('/', function () {
-    return view('welcome');
-});

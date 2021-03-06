@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description:
+ * @version:
+ * @Author: lmg
+ * @Date: 2021-03-06 11:40:17
+ * @LastEditTime: 2021-03-06 15:25:32
+ */
 
 namespace App\Providers;
 
@@ -26,7 +33,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string|null
      */
-    // protected $namespace = 'App\\Http\\Controllers';
+    protected $namespace = 'App\\Http\\Controllers';
 
     /**
      * Define your route model bindings, pattern filters, etc.
