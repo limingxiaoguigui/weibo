@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-06 17:43:16
+ * @LastEditTime: 2021-03-13 11:26:17
  */
 
 use Illuminate\Support\Facades\Route;
@@ -29,6 +29,13 @@ Route::get('/about', 'StaticPagesController@about')->name('about');
 Route::get('signup', 'UsersController@create')->name('signup');
 //用户相关
 Route::resource('users', 'UsersController');
+//登录页面
+Route::get('login', 'SessionsController@create')->name('login');
+//登录操作
+Route::post('login', 'SessionsController@store')->name('login');
+//退出操作
+Route::delete('logout', 'SessionsController@destroy')->name('logout');
+
 
 
 
