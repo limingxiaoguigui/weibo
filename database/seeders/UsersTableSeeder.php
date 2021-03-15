@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-15 15:47:37
- * @LastEditTime: 2021-03-15 15:50:12
+ * @LastEditTime: 2021-03-15 16:38:29
  */
 
 namespace Database\Seeders;
@@ -27,6 +27,8 @@ class UsersTableSeeder extends Seeder
         $user->name = 'LMG';
         $user->email = 'htyzhliminggui@163.com';
         $user->password =bcrypt('123456') ;
+        $user->is_admin = true;
+
         $user->save();
 
 
