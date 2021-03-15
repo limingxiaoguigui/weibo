@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 16:34:54
- * @LastEditTime: 2021-03-15 11:55:02
+ * @LastEditTime: 2021-03-15 15:30:34
  */
 
 namespace App\Http\Controllers;
@@ -14,6 +14,20 @@ use App\Models\User;
 
 class UsersController extends Controller
 {
+
+    /**
+     * 初始化
+     */
+      public function __construct()
+    {
+        $this->middleware('auth', [
+            'except' => ['show', 'create', 'store']
+        ]);
+        $this->middleware('guest', [
+        'only' => ['create'],
+    ]);
+
+    }
     /**
      * 注册页
      * @return void
@@ -63,6 +77,8 @@ class UsersController extends Controller
      */
      public function edit(User $user)
     {
+        $this->authorize('update', $user);
+
         return view('users.edit', compact('user'));
     }
 
@@ -74,6 +90,8 @@ class UsersController extends Controller
      */
      public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
+
         $this->validate($request, [
             'name' => 'required|max:50',
             'password' => 'nullable|confirmed|min:6'

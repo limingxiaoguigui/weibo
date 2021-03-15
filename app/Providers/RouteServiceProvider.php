@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-06 15:25:32
+ * @LastEditTime: 2021-03-15 15:32:19
  */
 
 namespace App\Providers;
@@ -24,7 +24,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.

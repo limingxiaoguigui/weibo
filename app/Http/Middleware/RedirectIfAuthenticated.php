@@ -1,4 +1,11 @@
 <?php
+/*
+ * @Description:
+ * @version:
+ * @Author: lmg
+ * @Date: 2021-03-06 11:40:17
+ * @LastEditTime: 2021-03-15 15:31:55
+ */
 
 namespace App\Http\Middleware;
 
@@ -23,6 +30,8 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
+                session()->flash('info', '您已登录，无需再次操作。');
+
                 return redirect(RouteServiceProvider::HOME);
             }
         }

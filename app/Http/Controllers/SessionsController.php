@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-13 11:25:17
- * @LastEditTime: 2021-03-13 11:55:51
+ * @LastEditTime: 2021-03-15 15:30:04
  */
 
 namespace App\Http\Controllers;
@@ -15,6 +15,16 @@ use Auth;
 
 class SessionsController extends Controller
 {
+
+    /**
+     * 初始化
+     */
+     public function __construct()
+    {
+        $this->middleware('guest', [
+            'only' => ['create']
+        ]);
+    }
     /**
      * 登录页面
      * @return void
@@ -39,7 +49,10 @@ class SessionsController extends Controller
 
       if (Auth::attempt($credentials, $request->has('remember'))) {
         session()->flash('success', '欢迎回来！');
-        return redirect()->route('users.show', [Auth::user()]);
+
+        $fallback = route('users.show', Auth::user());
+        return redirect()->intended($fallback);
+
       } else {
         session()->flash('danger', '很抱歉，您的邮箱和密码不匹配');
         return redirect()->back()->withInput();
