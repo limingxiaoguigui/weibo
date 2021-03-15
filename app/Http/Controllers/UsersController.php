@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 16:34:54
- * @LastEditTime: 2021-03-15 15:30:34
+ * @LastEditTime: 2021-03-15 16:26:43
  */
 
 namespace App\Http\Controllers;
@@ -21,13 +21,24 @@ class UsersController extends Controller
       public function __construct()
     {
         $this->middleware('auth', [
-            'except' => ['show', 'create', 'store']
+            'except' => ['show', 'create', 'store','index']
         ]);
         $this->middleware('guest', [
         'only' => ['create'],
-    ]);
+        ]);
+    }
+
+    /**
+     * 用户列表
+     * @return void
+     */
+     public function index()
+    {
+        $users = User::paginate(6);
+        return view('users.index', compact('users'));
 
     }
+
     /**
      * 注册页
      * @return void
