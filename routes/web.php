@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-16 16:09:56
+ * @LastEditTime: 2021-03-16 18:04:36
  */
 
 use Illuminate\Support\Facades\Route;
@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 //首页
 Route::get('/', 'StaticPagesController@home')->name('home');
 //帮助页
@@ -45,5 +45,5 @@ Route::post('password/email', 'PasswordController@sendResetLinkEmail')->name('pa
 Route::get('password/reset/{token}', 'PasswordController@showResetForm')->name('password.reset');
 //重置密码操作
 Route::post('password/reset', 'PasswordController@reset')->name('password.update');
-
-
+//微博创建和删除
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
