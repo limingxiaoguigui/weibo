@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-13 11:26:17
+ * @LastEditTime: 2021-03-16 15:43:07
  */
 
 use Illuminate\Support\Facades\Route;
@@ -35,6 +35,8 @@ Route::get('login', 'SessionsController@create')->name('login');
 Route::post('login', 'SessionsController@store')->name('login');
 //退出操作
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
+//用户激活
+Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
 
 
 
