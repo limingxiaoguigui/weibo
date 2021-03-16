@@ -4,16 +4,15 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 16:34:54
- * @LastEditTime: 2021-03-16 17:21:26
+ * @LastEditTime: 2021-03-16 17:56:36
  */
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use Mail;
 use Auth;
-
+use Illuminate\Http\Request;
+use Mail;
 
 class UsersController extends Controller
 {
@@ -21,14 +20,14 @@ class UsersController extends Controller
     /**
      * 初始化
      */
-      public function __construct()
+    public function __construct()
     {
         $this->middleware('auth', [
             'except' => ['show', 'create', 'store', 'index', 'confirmEmail'],
         ]);
 
         $this->middleware('guest', [
-        'only' => ['create'],
+            'only' => ['create'],
         ]);
         // 限流 一个小时内只能提交 10 次请求；
         $this->middleware('throttle:10,60', [
@@ -41,7 +40,7 @@ class UsersController extends Controller
      * 用户列表
      * @return void
      */
-     public function index()
+    public function index()
     {
         $users = User::paginate(6);
         return view('users.index', compact('users'));
@@ -62,9 +61,13 @@ class UsersController extends Controller
      * @param User $user
      * @return void
      */
-     public function show(User $user)
+    public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $statuses = $user->statuses()
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return view('users.show', compact('user', 'statuses'));
+
     }
 
     /**
@@ -72,8 +75,9 @@ class UsersController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    public function store(Request $request){
-       $this->validate($request, [
+    public function store(Request $request)
+    {
+        $this->validate($request, [
             'name' => 'required|max:50',
             'email' => 'required|email|unique:users|max:255',
             'password' => 'required|confirmed|min:6',
@@ -94,7 +98,7 @@ class UsersController extends Controller
      * @param \App\Models\User $user
      * @return void
      */
-     public function edit(User $user)
+    public function edit(User $user)
     {
         $this->authorize('update', $user);
 
@@ -107,13 +111,13 @@ class UsersController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-     public function update(User $user, Request $request)
+    public function update(User $user, Request $request)
     {
         $this->authorize('update', $user);
 
         $this->validate($request, [
             'name' => 'required|max:50',
-            'password' => 'nullable|confirmed|min:6'
+            'password' => 'nullable|confirmed|min:6',
         ]);
 
         $data = [];
@@ -145,9 +149,9 @@ class UsersController extends Controller
      * @param [type] $user
      * @return void
      */
-     protected function sendEmailConfirmationTo($user)
+    protected function sendEmailConfirmationTo($user)
     {
-       $view = 'emails.confirm';
+        $view = 'emails.confirm';
         $data = compact('user');
         $to = $user->email;
         $subject = "感谢注册 Weibo 应用！请确认你的邮箱。";
@@ -175,6 +179,5 @@ class UsersController extends Controller
         session()->flash('success', '恭喜你，激活成功！');
         return redirect()->route('users.show', [$user]);
     }
-
 
 }
