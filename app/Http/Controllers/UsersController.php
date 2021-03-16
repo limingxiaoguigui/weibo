@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 16:34:54
- * @LastEditTime: 2021-03-16 17:11:04
+ * @LastEditTime: 2021-03-16 17:21:26
  */
 
 namespace App\Http\Controllers;
@@ -147,16 +147,15 @@ class UsersController extends Controller
      */
      protected function sendEmailConfirmationTo($user)
     {
-        $view = 'emails.confirm';
+       $view = 'emails.confirm';
         $data = compact('user');
-        $from = 'htyzhliminggui@163.com';
-        $name = 'LMG';
         $to = $user->email;
         $subject = "感谢注册 Weibo 应用！请确认你的邮箱。";
 
-        Mail::send($view, $data, function ($message) use ($from, $name, $to, $subject) {
-            $message->from($from, $name)->to($to)->subject($subject);
+        Mail::send($view, $data, function ($message) use ($to, $subject) {
+            $message->to($to)->subject($subject);
         });
+
     }
 
     /**
