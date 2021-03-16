@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 16:34:54
- * @LastEditTime: 2021-03-16 16:05:20
+ * @LastEditTime: 2021-03-16 17:11:04
  */
 
 namespace App\Http\Controllers;
@@ -30,6 +30,11 @@ class UsersController extends Controller
         $this->middleware('guest', [
         'only' => ['create'],
         ]);
+        // 限流 一个小时内只能提交 10 次请求；
+        $this->middleware('throttle:10,60', [
+            'only' => ['store'],
+        ]);
+
     }
 
     /**

@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-13 11:25:17
- * @LastEditTime: 2021-03-16 15:46:21
+ * @LastEditTime: 2021-03-16 17:10:53
  */
 
 namespace App\Http\Controllers;
@@ -24,6 +24,11 @@ class SessionsController extends Controller
         $this->middleware('guest', [
             'only' => ['create']
         ]);
+        // 限流 10 分钟十次
+        $this->middleware('throttle:10,10', [
+            'only' => ['store'],
+        ]);
+
     }
     /**
      * 登录页面

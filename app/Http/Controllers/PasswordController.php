@@ -12,11 +12,32 @@ use Carbon\Carbon;
 
 class PasswordController extends Controller
 {
+
+    /**
+     * 初始化
+     */
+    public function __construct()
+    {
+       $this->middleware('throttle:3,10', [
+        'only' => ['sendResetLinkEmail'],
+       ]);
+
+    }
+
+    /**
+     * 发送重置邮件
+     * @return void
+     */
     public function showLinkRequestForm()
     {
         return view('auth.passwords.email');
     }
 
+    /**
+     * 发送重置密码链接
+     * @param \Illuminate\Http\Request $request
+     * @return void
+     */
     public function sendResetLinkEmail(Request $request)
     {
         // 1. 验证邮箱
