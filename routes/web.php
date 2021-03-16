@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-16 15:43:07
+ * @LastEditTime: 2021-03-16 16:09:56
  */
 
 use Illuminate\Support\Facades\Route;
@@ -37,8 +37,13 @@ Route::post('login', 'SessionsController@store')->name('login');
 Route::delete('logout', 'SessionsController@destroy')->name('logout');
 //用户激活
 Route::get('signup/confirm/{token}', 'UsersController@confirmEmail')->name('confirm_email');
-
-
-
+//重置页面
+Route::get('password/reset', 'PasswordController@showLinkRequestForm')->name('password.request');
+//发送重置密码邮件
+Route::post('password/email', 'PasswordController@sendResetLinkEmail')->name('password.email');
+//填写重置密码
+Route::get('password/reset/{token}', 'PasswordController@showResetForm')->name('password.reset');
+//重置密码操作
+Route::post('password/reset', 'PasswordController@reset')->name('password.update');
 
 
