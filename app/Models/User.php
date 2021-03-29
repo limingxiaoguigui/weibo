@@ -4,7 +4,7 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-06 11:40:17
- * @LastEditTime: 2021-03-16 17:52:58
+ * @LastEditTime: 2021-03-29 20:04:16
  */
 
 namespace App\Models;
@@ -79,4 +79,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Status::class);
     }
+
+    public function feed()
+    {
+        return $this->statuses()
+            ->orderBy('created_at', 'desc');
+    }
+
 }
