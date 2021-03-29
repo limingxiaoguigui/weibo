@@ -4,11 +4,12 @@
  * @version:
  * @Author: lmg
  * @Date: 2021-03-16 18:05:11
- * @LastEditTime: 2021-03-16 18:13:09
+ * @LastEditTime: 2021-03-29 20:24:21
  */
 
 namespace App\Http\Controllers;
 
+use App\Models\Status;
 use Auth;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,20 @@ class StatusesController extends Controller
         ]);
 
         session()->flash('success', '发布成功！');
+        return redirect()->back();
+    }
+
+    /**
+     * 删除微博
+     * @param Status $status
+     * @return void
+     */
+    public function destroy(Status $status)
+    {
+        $this->authorize('destroy', $status);
+        $status->delete();
+        session()->flash('success', '微博已被成功删除！');
+
         return redirect()->back();
     }
 }
